@@ -19,6 +19,12 @@ const Footer = () => {
   return (
     <footer className="footer-wrapper">
       <div className="container footer-container">
+        <div className="developer-credit">
+          <span className="credit-label">تم إنشاؤه بواسطة</span>
+          <span className="credit-name">جابر بدر</span>
+          <span className="credit-contact">للتواصل: 01019806684</span>
+        </div>
+
         <div className="footer-info">
           <h3>{settings?.storeName || 'Basant Catalog'}</h3>
           {settings?.location && <p>{settings.location}</p>}
