@@ -1,0 +1,162 @@
+.admin-login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-body);
+  padding: 20px;
+}
+
+.admin-login-card {
+  background: var(--color-bg-card);
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.admin-login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.admin-login-header h2 {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.admin-alert {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.admin-alert.error {
+  background-color: #fff5f5;
+  color: var(--color-error);
+  border: 1px solid #fed7d7;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  font-size: 0.95rem;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.mt-2 {
+  margin-top: 8px;
+}
+
+/* Admin Dashboard Layout Styles */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-bg-body);
+}
+
+.admin-sidebar {
+  width: 250px;
+  background-color: var(--color-bg-card);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.admin-sidebar.mobile-closed {
+  transform: translateX(100%);
+}
+
+.admin-sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-sidebar-header h3 {
+  color: var(--color-primary);
+}
+
+.admin-nav {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.admin-nav-link:hover, .admin-nav-link.active {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.admin-logout {
+  padding: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-main {
+  flex: 1;
+  margin-right: 0;
+  padding: 20px;
+  width: 100%;
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 992px) {
+  .admin-sidebar {
+    transform: translateX(0) !important;
+  }
+  .admin-main {
+    margin-right: 250px;
+    padding: 32px;
+  }
+  .admin-topbar .menu-btn {
+    display: none;
+  }
+}
