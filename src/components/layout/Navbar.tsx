@@ -79,11 +79,6 @@ const Navbar = () => {
                 <span className="desktop-text">الأقسام</span>
               </button>
             </div>
-
-            {/* Logo */}
-            <Link to="/" className="navbar-logo" onClick={() => setIsMenuOpen(false)}>
-              <img src={basantLogo} alt="Basant Logo" className="logo-img" />
-            </Link>
           </div>
 
           {/* Search Desktop */}
@@ -101,6 +96,11 @@ const Navbar = () => {
               </button>
             </form>
           </div>
+
+          {/* Logo on the left */}
+          <Link to="/" className="navbar-logo" onClick={() => setIsMenuOpen(false)}>
+            <img src={basantLogo} alt="Basant Logo" className="logo-img" />
+          </Link>
         </div>
       </header>
 
