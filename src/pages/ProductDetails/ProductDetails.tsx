@@ -55,7 +55,7 @@ const ProductDetails = () => {
     return (
       <div className="container details-error">
         <p className="text-error">{error}</p>
-        <button className="btn btn-outline mt-4" onClick={() => navigate(-1)}>
+        <button className="btn btn-outline mt-4" onClick={() => navigate('/')}>
           رجوع
         </button>
       </div>

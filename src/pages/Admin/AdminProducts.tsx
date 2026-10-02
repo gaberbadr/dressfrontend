@@ -255,7 +255,20 @@ const AdminProducts = () => {
                   <label>القسم</label>
                   <select className="input-field" value={formData.categoryId || ''} onChange={e => setFormData({...formData, categoryId: Number(e.target.value)})} required>
                     <option value="" disabled>اختر القسم</option>
-                    {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    {(() => {
+                      const flatten = (cats: Category[], prefix = ''): { id: number, name: string }[] => {
+                        let result: { id: number, name: string }[] = [];
+                        cats.forEach(c => {
+                          const newName = prefix ? `${prefix} > ${c.name}` : c.name;
+                          result.push({ id: c.id, name: newName });
+                          if (c.children && c.children.length > 0) {
+                            result = result.concat(flatten(c.children, newName));
+                          }
+                        });
+                        return result;
+                      };
+                      return flatten(categories).map(c => <option key={c.id} value={c.id}>{c.name}</option>);
+                    })()}
                   </select>
                 </div>
               </div>

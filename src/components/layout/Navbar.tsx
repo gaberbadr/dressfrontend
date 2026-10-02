@@ -1,10 +1,41 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, Search, X } from 'lucide-react';
+import { Menu, Search, X, ChevronDown, ChevronLeft } from 'lucide-react';
 import { categoriesApi } from '../../features/categories/api/categoriesApi';
 import type { Category } from '../../types/models';
 import basantLogo from '../../assets/basantlogo.jpg';
 import './Navbar.css';
+
+const CategoryNode = ({ category, toggleMenu, level = 0 }: { category: Category, toggleMenu: () => void, level?: number }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const hasChildren = category.children && category.children.length > 0;
+
+  return (
+    <li className="category-node" style={{ display: 'block', width: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: `${level * 15}px` }}>
+        <Link to={`/?categoryId=${category.id}`} onClick={toggleMenu} style={{ flexGrow: 1 }}>
+          {category.name}
+        </Link>
+        {hasChildren && (
+          <button 
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsExpanded(!isExpanded); }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: 'var(--color-text-main)' }}
+            aria-label="Expand/Collapse"
+          >
+            {isExpanded ? <ChevronDown size={18} /> : <ChevronLeft size={18} />}
+          </button>
+        )}
+      </div>
+      {isExpanded && hasChildren && (
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
+          {category.children.map(child => (
+            <CategoryNode key={child.id} category={child} toggleMenu={toggleMenu} level={level + 1} />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+};
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,24 +43,12 @@ const Navbar = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const navigate = useNavigate();
 
-
-  const flattenCategories = (cats: Category[], level = 0): (Category & { level: number })[] => {
-    let result: (Category & { level: number })[] = [];
-    cats.forEach(c => {
-      result.push({ ...c, level });
-      if (c.children && c.children.length > 0) {
-        result = result.concat(flattenCategories(c.children, level + 1));
-      }
-    });
-    return result;
-  };
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await categoriesApi.getCategories();
         if (res.success) {
-          setCategories(flattenCategories(res.data) as any); // Storing flat categories in the same state
+          setCategories(res.data);
         }
       } catch (err) {
         console.error('Failed to load categories', err);
@@ -117,12 +136,8 @@ const Navbar = () => {
           <nav className="drawer-nav">
             <ul>
               <li><Link to="/" onClick={toggleMenu}>الرئيسية</Link></li>
-              {categories.map((cat: any) => (
-                <li key={cat.id} style={{ paddingRight: `${cat.level * 15}px` }}>
-                  <Link to={`/?categoryId=${cat.id}`} onClick={toggleMenu}>
-                    {cat.level > 0 ? '↳ ' : ''}{cat.name}
-                  </Link>
-                </li>
+              {categories.map((cat: Category) => (
+                <CategoryNode key={cat.id} category={cat} toggleMenu={toggleMenu} />
               ))}
 
             </ul>

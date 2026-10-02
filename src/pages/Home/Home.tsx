@@ -7,7 +7,7 @@ import ProductGrid from '../../components/product/ProductGrid';
 import './Home.css';
 
 const Home = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const searchKeyword = searchParams.get('search') || '';
   const categoryIdParam = searchParams.get('categoryId');
   const [sortOption, setSortOption] = useState<string>('');
@@ -133,7 +133,21 @@ const Home = () => {
     <div className="home-container container">
       <div className="home-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
         {searchKeyword ? (
-          <h2>نتائج البحث عن: "{searchKeyword}"</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            بحث: {searchKeyword}
+            <button 
+              onClick={() => {
+                const newParams = new URLSearchParams(searchParams);
+                newParams.delete('search');
+                setSearchParams(newParams);
+                setSortOption('');
+              }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem', color: 'red', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              aria-label="مسح البحث"
+            >
+              ✕
+            </button>
+          </h2>
         ) : (
           <h2>أحدث المنتجات</h2>
         )}
