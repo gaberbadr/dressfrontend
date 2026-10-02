@@ -11,7 +11,7 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
   const navigate = useNavigate();
-  const hasToken = !!localStorage.getItem('token');
+
 
   const flattenCategories = (cats: Category[], level = 0): (Category & { level: number })[] => {
     let result: (Category & { level: number })[] = [];
